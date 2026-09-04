@@ -1,0 +1,1 @@
+- [Fallback content boundary](fallback-content.md) — starter records are public-only and must never be treated as editable database records in admin.

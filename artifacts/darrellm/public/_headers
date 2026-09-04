@@ -1,0 +1,12 @@
+# Never cache the HTML shell — fixes stale data on Render
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Long-cache hashed build assets (filenames are content-hashed by Vite)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

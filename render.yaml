@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: darrellm-portfolio
+    runtime: node
+    rootDir: .
+    buildCommand: pnpm install --frozen-lockfile && pnpm run build:render
+    startCommand: pnpm run start:render
+    healthCheckPath: /api/healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "24"
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_SECRET
+        sync: false
+      - key: CDN_API_KEY
+        sync: false
+      - key: CDN_BASE_URL
+        value: https://mrfranko-cdn.hf.space
+      - key: CDN_DEFAULT_PATH
+        value: ice/
