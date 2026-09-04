@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Calendar, Clock, BookOpen } from "lucide-react";
 import { useBlogPosts } from "@/hooks/use-site-data";
 import { Link } from "react-router-dom";
+import { formatRecordDate } from "@/lib/format-date";
 
 const readingTime = (text: string) => {
   const words = (text || "").trim().split(/\s+/).length;
@@ -68,7 +69,7 @@ const BlogSection = () => {
                 <span className="font-mono text-[10px] uppercase tracking-widest px-2 py-1 rounded bg-foreground text-background">Featured</span>
                 <span className="text-xs font-mono text-muted-foreground inline-flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
-                  {new Date(featured.published_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}
+                   {formatRecordDate(featured)}
                 </span>
                 <span className="text-xs font-mono text-muted-foreground inline-flex items-center gap-1">
                   <Clock className="w-3 h-3" />
@@ -129,7 +130,7 @@ const BlogSection = () => {
                     <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground mb-3">
                       <span className="inline-flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
-                        {new Date(p.published_at).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}
+                         {formatRecordDate(p)}
                       </span>
                       <span>·</span>
                       <span className="inline-flex items-center gap-1">

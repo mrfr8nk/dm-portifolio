@@ -9,6 +9,7 @@ import remarkGfm from "remark-gfm";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import NewsletterSignup from "@/components/NewsletterSignup";
+import { formatRecordDate } from "@/lib/format-date";
 
 const readingTime = (text: string) => {
   const words = (text || "").trim().split(/\s+/).length;
@@ -60,7 +61,7 @@ const BlogPost = () => {
               <div className="flex items-center flex-wrap gap-3 text-xs font-mono text-muted-foreground mb-5">
                 <span className="inline-flex items-center gap-1.5">
                   <Calendar className="w-3 h-3" />
-                  {new Date(post.publishedAt || post.published_at).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })}
+                  {formatRecordDate(post, { year: "numeric", month: "long", day: "numeric" })}
                 </span>
                 <span>·</span>
                 <span className="inline-flex items-center gap-1.5">

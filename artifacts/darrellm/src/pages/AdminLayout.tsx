@@ -37,8 +37,8 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex">
-      <aside className={`fixed inset-y-0 left-0 z-50 w-60 bg-card border-r border-border transform transition-transform lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:static lg:block`}>
+    <div className="admin-layout min-h-screen bg-background flex">
+      <aside className={`admin-sidebar fixed inset-y-0 left-0 z-50 w-60 transform transition-transform lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:static lg:block`}>
         <div className="flex items-center justify-between h-14 px-4 border-b border-border">
           <Link to="/" className="flex items-center gap-2 font-mono font-bold text-sm">
             <img src="/favicon.ico" alt="logo" className="w-6 h-6 rounded" />
@@ -49,13 +49,13 @@ const AdminLayout = () => {
           </button>
         </div>
 
-        <nav className="p-3 space-y-0.5">
+        <nav className="p-3 space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
               onClick={() => setSidebarOpen(false)}
-              className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${
+              className={`admin-nav-item flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-colors ${
                 location.pathname === item.href
                   ? "bg-accent text-foreground"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
@@ -80,7 +80,7 @@ const AdminLayout = () => {
       </aside>
 
       <div className="flex-1 min-w-0">
-        <header className="h-14 border-b border-border flex items-center px-4 gap-3">
+        <header className="admin-header h-14 flex items-center px-4 gap-3">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden">
             <Menu className="w-5 h-5" />
           </button>
@@ -90,7 +90,7 @@ const AdminLayout = () => {
             <span className="text-foreground">{navItems.find(n => n.href === location.pathname)?.label || "Dashboard"}</span>
           </div>
         </header>
-        <main className="p-6 max-w-4xl">
+        <main className="admin-main p-6 max-w-4xl">
           <Outlet />
         </main>
       </div>

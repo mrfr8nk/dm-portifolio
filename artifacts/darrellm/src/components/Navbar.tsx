@@ -4,6 +4,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import dmLogo from "@/assets/dm-logo.png";
 import { motionDuration, motionEase } from "@/lib/motion";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -22,6 +23,8 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("top");
@@ -79,15 +82,45 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    if (location.pathname !== "/" || !location.hash) return;
+    const id = location.hash.slice(1);
+    const frame = window.requestAnimationFrame(() => {
+      if (id === "top") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [mobileOpen]);
 
-  const goTo = (href: string) => {
+  const goTo = (href: string, event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     setMobileOpen(false);
-    if (href === "#top") window.scrollTo({ top: 0, behavior: "smooth" });
+    if (location.pathname !== "/") {
+      navigate(`/${href}`);
+      return;
+    }
+
+    const id = href.slice(1);
+    if (id === "top") {
+      window.history.replaceState(null, "", "/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const target = document.getElementById(id);
+    if (target) {
+      window.history.replaceState(null, "", href);
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   return (
@@ -103,7 +136,7 @@ const Navbar = () => {
     >
       <span className="scroll-progress" style={{ transform: `scaleX(${scrollProgress / 100})` }} aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-[4.5rem]">
-        <a href="#top" onClick={() => goTo("#top")} data-testid="link-home" className="flex items-center gap-3 group" aria-label="Darrell Mucheri home">
+        <a href={location.pathname === "/" ? "#top" : "/"} onClick={(event) => goTo("#top", event)} data-testid="link-home" className="flex items-center gap-3 group" aria-label="Darrell Mucheri home">
           <img src={dmLogo} alt="Darrell Mucheri logo" className="w-9 h-9 rounded-full object-cover bg-card border border-border group-hover:rotate-[-8deg] transition-transform" />
           <span className="font-mono font-bold text-sm hidden sm:inline tracking-tight">
             darrell<span className="text-primary">.</span>dev
@@ -114,8 +147,8 @@ const Navbar = () => {
           {navItems.map((item) => (
             <a
               key={item.label}
-              href={item.href}
-              onClick={() => goTo(item.href)}
+               href={location.pathname === "/" ? item.href : `/${item.href}`}
+               onClick={(event) => goTo(item.href, event)}
               data-testid={`link-nav-${item.label.toLowerCase()}`}
               aria-current={activeSection === item.href.slice(1) ? "location" : undefined}
               className={`nav-link text-[11px] font-mono text-muted-foreground hover:text-foreground transition-colors uppercase tracking-[0.16em] ${activeSection === item.href.slice(1) ? "is-active text-foreground" : ""}`}
@@ -125,8 +158,8 @@ const Navbar = () => {
           ))}
           <ThemeToggle />
           <a
-            href="#contact"
-            onClick={() => goTo("#contact")}
+             href={location.pathname === "/" ? "#contact" : "/#contact"}
+             onClick={(event) => goTo("#contact", event)}
             data-testid="link-navbar-contact"
             className="inline-flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-full bg-primary text-primary-foreground hover:translate-y-[-2px] transition-transform pressable"
           >
@@ -163,9 +196,9 @@ const Navbar = () => {
               {navItems.map((item) => (
                 <a
                   key={item.label}
-                  href={item.href}
+                   href={location.pathname === "/" ? item.href : `/${item.href}`}
                   data-testid={`link-mobile-${item.label.toLowerCase()}`}
-                  onClick={() => goTo(item.href)}
+                   onClick={(event) => goTo(item.href, event)}
                   aria-current={activeSection === item.href.slice(1) ? "location" : undefined}
                   className={`mobile-nav-link text-muted-foreground hover:text-foreground transition-colors py-2.5 text-sm font-mono ${activeSection === item.href.slice(1) ? "is-active text-foreground" : ""}`}
                 >
@@ -173,8 +206,8 @@ const Navbar = () => {
                 </a>
               ))}
               <a
-                href="#contact"
-                onClick={() => goTo("#contact")}
+                 href={location.pathname === "/" ? "#contact" : "/#contact"}
+                 onClick={(event) => goTo("#contact", event)}
                 data-testid="link-mobile-contact"
                 className="mt-2 text-sm font-bold px-4 py-3 rounded-full bg-primary text-primary-foreground text-center pressable"
               >
