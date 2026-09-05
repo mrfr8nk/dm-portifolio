@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { formatRecordDate } from "@/lib/format-date";
+import Seo, { SITE_URL } from "@/components/Seo";
 
 const readingTime = (text: string) => {
   const words = (text || "").trim().split(/\s+/).length;
@@ -36,6 +37,21 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title={post?.title ? `${post.title} | Darrell Mucheri` : "Blog | Darrell Mucheri"}
+        description={post?.excerpt || "Notes on software development, AI engineering, physics, and building products by Darrell Mucheri."}
+        path={slug ? `/blog/${slug}` : "/blog"}
+        type="article"
+        structuredData={post ? {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          url: `${SITE_URL}/blog/${slug}`,
+          author: { "@type": "Person", name: "Darrell Mucheri", url: SITE_URL },
+          datePublished: post.publishedAt || post.published_at || post.createdAt || post.created_at,
+        } : undefined}
+      />
       <Navbar />
 
       <article className="max-w-3xl mx-auto px-6 md:px-12 py-32">

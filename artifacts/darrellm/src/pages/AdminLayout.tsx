@@ -5,6 +5,7 @@ import {
   LayoutDashboard, Settings, FolderOpen, MapPin, Hammer, Link2,
   Globe, LogOut, ChevronRight, Menu, X, FileText, BarChart3, Inbox, MessageSquareQuote, GraduationCap, Award, UsersRound, MailPlus, ScrollText,
 } from "lucide-react";
+import Seo from "@/components/Seo";
 
 const navItems = [
   { label: "Settings", href: "/admin/settings", icon: Settings },
@@ -38,6 +39,7 @@ const AdminLayout = () => {
 
   return (
     <div className="admin-layout min-h-screen bg-background flex">
+      <Seo title="Portfolio Admin | Darrell Mucheri" description="Private portfolio content management area." path={location.pathname} noIndex />
       <aside className={`admin-sidebar fixed inset-y-0 left-0 z-50 w-60 transform transition-transform lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:static lg:block`}>
         <div className="flex items-center justify-between h-14 px-4 border-b border-border">
           <Link to="/" className="flex items-center gap-2 font-mono font-bold text-sm">

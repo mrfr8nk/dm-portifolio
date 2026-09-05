@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { LogIn } from "lucide-react";
+import Seo from "@/components/Seo";
 
 const AdminLogin = () => {
   const { signIn } = useAuth();
@@ -23,6 +24,7 @@ const AdminLogin = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
+      <Seo title="Admin Login | Darrell Mucheri" description="Private administration area for Darrell Mucheri's portfolio." path="/admin/login" noIndex />
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
           <p className="font-mono text-sm text-muted-foreground mb-2">d.m/admin</p>

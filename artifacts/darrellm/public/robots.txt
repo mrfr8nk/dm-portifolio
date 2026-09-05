@@ -22,3 +22,5 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/
+
+Sitemap: https://darrell.synapex.co.zw/sitemap.xml

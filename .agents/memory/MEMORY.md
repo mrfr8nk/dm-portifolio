@@ -1,1 +1,2 @@
 - [Fallback content boundary](fallback-content.md) — starter records are public-only and must never be treated as editable database records in admin.
+- [Direct Vite builds](vite-build-env.md) — the portfolio build needs explicit PORT and BASE_PATH values when run outside its managed workflow.

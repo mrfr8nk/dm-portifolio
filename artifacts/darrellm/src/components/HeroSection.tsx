@@ -1,21 +1,14 @@
 import { useEffect, useState, type PointerEvent } from "react";
-import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { ArrowDown, ArrowRight, Download, Mail } from "lucide-react";
 import { useSiteSettings } from "@/hooks/use-site-data";
 import profileImg from "@/assets/profile-hero.jpg";
 
-const taglines = [
-  "Full Stack Developer",
-  "WhatsApp Bot Builder",
-  "Startup Founder",
-  "System Architect",
-];
+const roleLines = ["A software dev", "AI engineer", "Physics lover"];
 
 const HeroSection = () => {
   const { data: settings } = useSiteSettings();
   const [tagIndex, setTagIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [typing, setTyping] = useState(true);
   const shouldReduceMotion = useReducedMotion();
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -23,31 +16,10 @@ const HeroSection = () => {
   const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-9, 9]), { stiffness: 170, damping: 20 });
 
   useEffect(() => {
-    if (shouldReduceMotion) {
-      setDisplayed(taglines[0]);
-      setTyping(false);
-      return;
-    }
-    const target = taglines[tagIndex];
-    if (typing) {
-      if (displayed.length < target.length) {
-        const t = setTimeout(() => setDisplayed(target.slice(0, displayed.length + 1)), 60);
-        return () => clearTimeout(t);
-      } else {
-        const t = setTimeout(() => setTyping(false), 2000);
-        return () => clearTimeout(t);
-      }
-    } else {
-      if (displayed.length > 0) {
-        const t = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 30);
-        return () => clearTimeout(t);
-      } else {
-        setTagIndex((i) => (i + 1) % taglines.length);
-        setTyping(true);
-        return undefined;
-      }
-    }
-  }, [displayed, typing, tagIndex, shouldReduceMotion]);
+    if (shouldReduceMotion) return;
+    const timer = window.setInterval(() => setTagIndex((index) => (index + 1) % roleLines.length), 2600);
+    return () => window.clearInterval(timer);
+  }, [shouldReduceMotion]);
 
   const name = settings?.name || "Darrell Mucheri";
   const [firstName, ...rest] = name.split(" ");
@@ -122,16 +94,44 @@ const HeroSection = () => {
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-            <p className="eyebrow mb-7">
+            <motion.p
+              className="eyebrow mb-5 hero-hello"
+              initial={{ opacity: 0, y: 12, rotateX: -55 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              Hey there, I&apos;m
+            </motion.p>
+            <p className="eyebrow mb-7 text-muted-foreground">
               {settings?.hero_greeting_prefix || "~/darrell-mucheri"}
             </p>
-            <h1 className="display-font text-[3.55rem] sm:text-6xl md:text-7xl lg:text-[6.6rem] font-bold leading-[0.91] mb-7 tracking-[-0.07em]">
+            <motion.h1
+              className="display-font text-[3.55rem] sm:text-6xl md:text-7xl lg:text-[6.6rem] font-bold leading-[0.91] mb-7 tracking-[-0.07em]"
+              initial={{ opacity: 0, y: 24, rotateX: -35 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{ duration: 0.8, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformPerspective: 900 }}
+            >
               {firstName}<br /><span className="text-primary">{rest.join(" ")}</span><span className="text-accent">.</span>
-            </h1>
-            <div className="h-8 mb-6 flex items-center">
+            </motion.h1>
+            <div className="hero-role-scene h-12 mb-5 flex items-center" aria-live="polite">
               <span className="mono-font text-xs md:text-sm text-muted-foreground">
-                <span className="text-primary">01</span>&nbsp; / &nbsp;{displayed}<span className="text-primary animate-pulse">_</span>
+                <span className="text-primary">01</span>&nbsp; / &nbsp;
               </span>
+              <AnimatePresence mode="wait" initial={!shouldReduceMotion}>
+                <motion.span
+                  key={shouldReduceMotion ? roleLines[0] : roleLines[tagIndex]}
+                  className="hero-role-line mono-font text-xs md:text-sm text-foreground"
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 18, rotateX: -70, filter: "blur(5px)" }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+                  exit={shouldReduceMotion ? undefined : { opacity: 0, y: -18, rotateX: 70, filter: "blur(5px)" }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ transformPerspective: 700 }}
+                >
+                  {roleLines[shouldReduceMotion ? 0 : tagIndex]}
+                </motion.span>
+              </AnimatePresence>
+              <span className="text-primary animate-pulse ml-1">_</span>
             </div>
             <p className="text-foreground/75 text-base md:text-lg max-w-xl mb-9 leading-relaxed">
               {settings?.tagline || "Started coding at 13. Now building systems, tools, and a developer ecosystem that solves real problems."}

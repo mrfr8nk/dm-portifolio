@@ -20,9 +20,24 @@ import HiringSection from "@/components/HiringSection";
 import SocialLinksSection from "@/components/SocialLinksSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import Seo, { SITE_URL } from "@/components/Seo";
 
 const Index = () => (
   <div className="min-h-screen bg-background">
+    <Seo
+      title="Darrell Mucheri | Software Developer & AI Engineer"
+      description="Darrell Mucheri is a Zimbabwean software developer, AI engineer, and physics lover building useful products, automation tools, and Synapex."
+      path="/"
+      structuredData={{
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Darrell Mucheri",
+        url: SITE_URL,
+        jobTitle: "Software Developer and AI Engineer",
+        description: "Software developer, AI engineer, and physics lover building useful products.",
+        knowsAbout: ["Software development", "Artificial intelligence", "Physics", "Automation"],
+      }}
+    />
     <Navbar />
     <HeroSection />
     <StackMarquee />

@@ -482,6 +482,19 @@
   }
   .hero-stage { perspective: 1200px; }
   .hero-frame { transform-style: preserve-3d; will-change: transform; }
+  .hero-hello {
+    transform-origin: left bottom;
+    perspective: 700px;
+  }
+  .hero-role-scene {
+    perspective: 700px;
+    transform-style: preserve-3d;
+  }
+  .hero-role-line {
+    display: inline-block;
+    transform-origin: center bottom;
+    transform-style: preserve-3d;
+  }
   .hero-frame::after {
     content: "";
     position: absolute;
