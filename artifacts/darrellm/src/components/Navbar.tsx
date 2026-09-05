@@ -81,17 +81,34 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (location.pathname !== "/" || !location.hash) return;
-    const id = location.hash.slice(1);
-    const frame = window.requestAnimationFrame(() => {
+  const scrollToSection = (id: string) => {
+    const attemptScroll = (remainingAttempts: number) => {
       if (id === "top") {
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      if (remainingAttempts > 0) {
+        window.requestAnimationFrame(() => attemptScroll(remainingAttempts - 1));
+      }
+    };
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => attemptScroll(12));
     });
-    return () => window.cancelAnimationFrame(frame);
+  };
+
+  useEffect(() => {
+    if (location.pathname !== "/" || !location.hash) return;
+    const id = location.hash.slice(1);
+    const timeout = window.setTimeout(() => scrollToSection(id), 80);
+    return () => window.clearTimeout(timeout);
   }, [location.pathname, location.hash]);
 
   useEffect(() => {
@@ -104,22 +121,21 @@ const Navbar = () => {
   const goTo = (href: string, event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     setMobileOpen(false);
-    if (location.pathname !== "/") {
-      navigate(`/${href}`);
+
+    if (href === "#top") {
+      navigate("/");
+      window.setTimeout(() => scrollToSection("top"), 80);
       return;
     }
 
     const id = href.slice(1);
-    if (id === "top") {
-      window.history.replaceState(null, "", "/");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
+    const sameDestination = location.pathname === "/" && location.hash === href;
+    navigate({ pathname: "/", hash: href });
 
-    const target = document.getElementById(id);
-    if (target) {
-      window.history.replaceState(null, "", href);
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    // If the user taps the already-selected item, React Router has no
+    // location change to emit; still scroll after the menu unlocks the body.
+    if (sameDestination) {
+      window.setTimeout(() => scrollToSection(id), 80);
     }
   };
 
