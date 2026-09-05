@@ -129,13 +129,11 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: motionDuration.section, ease: motionEase }}
       className={`nav-shell fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "is-scrolled bg-background/88 backdrop-blur-xl border-b border-border"
-          : "bg-background/60 backdrop-blur-sm"
+        scrolled ? "is-scrolled" : ""
       }`}
     >
       <span className="scroll-progress" style={{ transform: `scaleX(${scrollProgress / 100})` }} aria-hidden="true" />
-      <div className="max-w-7xl mx-auto px-5 md:px-10 flex items-center justify-between h-[4.5rem]">
+      <div className="nav-inner max-w-7xl mx-auto px-5 md:px-7 flex items-center justify-between h-[4.5rem]">
         <a href={location.pathname === "/" ? "#top" : "/"} onClick={(event) => goTo("#top", event)} data-testid="link-home" className="flex items-center gap-3 group" aria-label="Darrell Mucheri home">
           <img src={dmLogo} alt="Darrell Mucheri logo" className="w-9 h-9 rounded-full object-cover bg-card border border-border group-hover:rotate-[-8deg] transition-transform" />
           <span className="font-mono font-bold text-sm hidden sm:inline tracking-tight">
@@ -161,7 +159,7 @@ const Navbar = () => {
              href={location.pathname === "/" ? "#contact" : "/#contact"}
              onClick={(event) => goTo("#contact", event)}
             data-testid="link-navbar-contact"
-            className="inline-flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-full bg-primary text-primary-foreground hover:translate-y-[-2px] transition-transform pressable"
+            className="liquid-button liquid-button-primary inline-flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-full bg-primary text-primary-foreground hover:translate-y-[-2px] transition-transform pressable"
           >
             Let's talk <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
@@ -190,7 +188,7 @@ const Navbar = () => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: motionDuration.normal, ease: motionEase }}
             id="mobile-navigation"
-             className="xl:hidden bg-background/95 backdrop-blur-xl border-t border-border"
+             className="xl:hidden liquid-mobile-menu"
           >
             <div className="px-6 py-4 flex flex-col gap-1">
               {navItems.map((item) => (
@@ -209,7 +207,7 @@ const Navbar = () => {
                  href={location.pathname === "/" ? "#contact" : "/#contact"}
                  onClick={(event) => goTo("#contact", event)}
                 data-testid="link-mobile-contact"
-                className="mt-2 text-sm font-bold px-4 py-3 rounded-full bg-primary text-primary-foreground text-center pressable"
+                 className="liquid-button liquid-button-primary mt-2 text-sm font-bold px-4 py-3 rounded-full bg-primary text-primary-foreground text-center pressable"
               >
                 Let's Talk
               </a>

@@ -9,7 +9,7 @@ const ThemeToggle = ({ className = "" }: { className?: string }) => {
       onClick={toggle}
       data-testid="button-theme-toggle"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-      className={`relative w-9 h-9 rounded-md border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors overflow-hidden ${className}`}
+      className={`glass-icon-button relative w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors overflow-hidden ${className}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         {theme === "dark" ? (

@@ -92,7 +92,7 @@ const HeroSection = () => {
                 aria-hidden="true"
               />
               <div className="absolute -inset-3 rounded-[2rem] border border-primary/20 rotate-3" aria-hidden="true" />
-              <div className="hero-frame relative aspect-[0.86] rounded-[1.75rem] overflow-hidden border border-border bg-secondary shadow-2xl shadow-primary/10">
+               <div className="hero-frame liquid-hero-frame relative aspect-[0.86] rounded-[1.75rem] overflow-hidden border border-border bg-secondary shadow-2xl shadow-primary/10">
                 <div className="absolute inset-0 bg-primary/10 z-10 mix-blend-multiply" aria-hidden="true" />
                  <motion.img
                   src={profileSrc}
@@ -110,12 +110,12 @@ const HeroSection = () => {
                   <span className="h-3 w-3 rounded-full bg-accent border-2 border-background" />
                 </div>
               </div>
-              <div className="absolute -left-5 top-8 bg-card border border-border rounded-full px-3 py-2 shadow-sm">
+               <div className="glass-badge absolute -left-5 top-8 bg-card border border-border rounded-full px-3 py-2 shadow-sm">
                 <span className="mono-font text-[10px] text-muted-foreground flex items-center gap-1.5">
                   <span className="text-primary">/</span> profile / 01
                 </span>
               </div>
-              <div className="absolute -right-4 bottom-10 bg-background/80 backdrop-blur border border-border rounded-full px-3 py-2 shadow-sm">
+               <div className="glass-badge absolute -right-4 bottom-10 bg-background/80 backdrop-blur border border-border rounded-full px-3 py-2 shadow-sm">
                 <span className="mono-font text-[10px] uppercase tracking-[0.12em] text-muted-foreground">move to explore</span>
               </div>
             </motion.div>
@@ -137,13 +137,13 @@ const HeroSection = () => {
               {settings?.tagline || "Started coding at 13. Now building systems, tools, and a developer ecosystem that solves real problems."}
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href="#projects" data-testid="link-hero-projects" className="inline-flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground font-bold text-sm rounded-full hover:translate-y-[-2px] transition-transform shadow-lg shadow-primary/15">
+               <a href="#projects" data-testid="link-hero-projects" className="liquid-button liquid-button-primary inline-flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground font-bold text-sm rounded-full hover:translate-y-[-2px] transition-transform shadow-lg shadow-primary/15">
                 View Projects <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="#contact" data-testid="link-hero-contact" className="inline-flex items-center gap-2 px-5 py-3 border border-border text-foreground font-bold text-sm rounded-full hover:bg-accent transition-colors">
+               <a href="#contact" data-testid="link-hero-contact" className="liquid-button inline-flex items-center gap-2 px-5 py-3 border border-border text-foreground font-bold text-sm rounded-full hover:bg-accent transition-colors">
                 <Mail className="w-4 h-4" /> Contact
               </a>
-              <a href={settings?.cv_url || "#"} data-testid="link-hero-cv" className="inline-flex items-center gap-2 px-5 py-3 border border-border text-muted-foreground font-bold text-sm rounded-full hover:bg-accent hover:text-foreground transition-colors">
+               <a href={settings?.cv_url || "#"} data-testid="link-hero-cv" className="liquid-button inline-flex items-center gap-2 px-5 py-3 border border-border text-muted-foreground font-bold text-sm rounded-full hover:bg-accent hover:text-foreground transition-colors">
                 <Download className="w-4 h-4" /> CV
               </a>
             </div>
