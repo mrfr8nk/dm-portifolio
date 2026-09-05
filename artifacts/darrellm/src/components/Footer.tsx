@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Heart } from "lucide-react";
 import { useSocialLinks, useFooterLinks } from "@/hooks/use-site-data";
 import { getIcon } from "@/lib/icons";
 import dmLogo from "@/assets/dm-logo.png";
@@ -47,6 +47,12 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-border">
           <p className="text-muted-foreground text-xs">© {new Date().getFullYear()} Darrell Mucheri</p>
+          <p className="footer-signature" aria-label="Made with love by Darrell">
+            <span className="footer-signature-copy">made with</span>
+            <Heart className="footer-signature-heart" fill="currentColor" aria-hidden="true" />
+            <span className="footer-signature-copy">by</span>
+            <span className="footer-signature-name">Darrell</span>
+          </p>
           <div className="flex gap-2">
             {(socials as unknown as Array<{ id: string; icon_name: string; url: string; platform: string }> | undefined)
               ?.filter((s) => s.url && !placeholderUrls.has(s.url))
